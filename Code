@@ -1,0 +1,147 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    //Ships here on the fixed positions i wanted to make them random, but i cant for now
+    //As you can see its MY battleground where 1 there is no ships, where 2 there is a ships mast
+    int myBattleGround[10][10]={
+    {1,1,1,1,1,1,1,1,1,1},
+    {1,1,2,2,1,1,1,1,1,1},//on the position 1,2 and 1,3
+    {1,1,1,1,1,1,1,1,1,1},
+    {1,1,1,1,1,2,1,1,1,1},//on the position 3,5 and 4,5 and 6,5
+    {1,1,1,1,1,2,1,1,1,1},
+    {2,1,1,1,1,2,1,1,1,1},//on the position 6,0
+    {1,1,1,1,1,1,1,1,1,1},
+    {1,2,1,1,1,1,1,1,1,1},//on the position 7,1
+    {1,1,1,1,1,1,1,1,2,2},//on the position 8,8 and 8,9
+    {1,1,1,1,1,1,1,1,1,1}
+    };
+
+//Rules and description
+
+cout<<"Welcome to the battleships game!"<<endl<<endl;
+cout<<"List of rules:"<<endl<<endl;
+cout<<"In the battleships game you have 20 hits, for the both, right or wrong hits your attempt number decreases by 1"<<endl;
+cout<<"The battle field is 10x10 and you must input 2 numbers, from 1 to 10 to make a hit. On the battle field we "<<endl;
+cout<<"have two ships with 2 masts, two ships with 1 mast and 1 ship with 3 masts. The cell with number-0,means that"<<endl;
+cout<<"you had no hit at this cell yet,number-1 that you had and you fount the mast of the ship and number-2"<<endl;
+cout<<"that you had a hit but there is no ship.Lets go !!!"<<endl<<endl;
+//Where x and y are the users input numbers
+    int x;
+    int y;
+
+//20 times repeating loop l and counter when the answer is right ++
+
+for(int l=0,counter=0;l<20,counter<10;l++){
+
+//improvised interface
+    cout<<"    "<<1<<" "<<2<<" "<<3<<" "<<4<<" "<<5<<" "<<6<<" "<<7<<" "<<8<<" "<<9<<" "<<10<<" ";
+    cout<<endl<<endl;
+
+//the loop for first element of the-array [i][]
+//and also j for making a symmetrical interface
+ for(int i=0,j=1;i<10,j<11;i++,j++){
+
+
+
+    if(j!=10)
+cout<<j<<"   ";
+    else
+cout<<j<<"  ";
+
+    //this loop for second element of the-array[][k]
+    for(int k=0;k<10;k++){
+
+    //Declared USERS battleground
+    int usersBattleGround[10][10];
+
+            //Because of user doesn't know that array starts with 0 so first number x-1 second number y-1
+            //this declaration is used for checking if users input-1 in MY battleground is equal 2 and i and k position are equal to users input
+            //then usersbattleground at pos [i][k]=1, display it and counter ++
+            if(i==x-1&&k==y-1&&myBattleGround[x-1][y-1]==2){
+
+        usersBattleGround[i][k]=1;
+
+        cout<<usersBattleGround[i][k]<<" ";
+            counter++;
+            }
+            //this declaration is used for updating users battleground with new saved changes
+            else if(usersBattleGround[i][k]==1){
+
+        usersBattleGround[i][k]=1;
+        cout<<usersBattleGround[i][k]<<" ";
+
+            }
+             //this declaration is used for changing a cell number in to 2 witch means that user had a hit at the cell but there was no ships
+            else if(i==x-1&&k==y-1&&myBattleGround[x-1][y-1]==1)
+                    {
+                usersBattleGround[i][k]=2;
+        cout<<usersBattleGround[i][k]<<" ";
+            }
+             //this declaration is used for updating users battleground with new saved changes
+             else if(usersBattleGround[i][k]==2){
+
+        usersBattleGround[i][k]=2;
+        cout<<usersBattleGround[i][k]<<" ";
+
+            }
+            //and finally else cells are 0 witch means that user had no hits at the cell
+            else{
+                usersBattleGround[i][k]=0;
+        cout<<usersBattleGround[i][k]<<" ";
+            }
+
+    }
+//After each raw new line
+cout<<endl;
+ }
+//Enter data
+
+cout<<endl;
+//this declaration is used for ending a process when counter = 9 because at total we have 9 masts of ships
+//user won the game
+if(counter==9&&l<20){
+    cout<<"Congratulations you won!!!"<<endl<<endl;
+    break;
+}
+//this declaration is used for ending a process when counter<9 and l=20 that means that user lose because there is no attempts left and not all the
+//ships destroyed
+else if(counter<9&&l==20){
+        cout<<"I'm sorry you lose, try again!!!"<<endl<<endl;
+        break;
+}
+
+cout<<"Enter two numbers (first vertical, then horizontal):";
+
+cin>>x>>y;
+cout<<endl;
+
+//if user entered the wrong numbers casually then give the message and don't consider this attempt l--
+if(x>10||y>10){
+    l--;
+    cout<<"Number from 1 to 10 please!"<<endl<<endl;
+}
+//Give a message if hit is right and show the attempts
+if(myBattleGround[x-1][y-1]==2){
+    cout<<endl;
+    cout<<"Nice hit!";
+    cout<<endl;
+    cout<<endl;
+    cout<<"You have:"<<19-l<<" attempts."<<endl<<endl;
+}
+//Give a message if hit is wrong and show the attempts
+else if(myBattleGround[x-1][y-1]==1)
+    {
+    cout<<endl;
+    cout<<"Wrong hit,try again.";
+    cout<<endl;
+    cout<<endl;
+    cout<<"You have:"<<19-l<<" attempts."<<endl<<endl;
+}
+//end of enter data
+}
+
+      return 0;
+}
